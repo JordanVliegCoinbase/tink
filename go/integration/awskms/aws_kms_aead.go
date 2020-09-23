@@ -20,6 +20,7 @@ package awskms
 import (
 	"encoding/hex"
 	"errors"
+	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -29,13 +30,13 @@ import (
 // AWSAEAD represents a AWS KMS service to a particular URI.
 type AWSAEAD struct {
 	keyURI string
-	kms    *kms.KMS
+	kms    kmsiface.KMSAPI
 }
 
 // newAWSAEAD returns a new AWS KMS service.
 // keyURI must have the following format: 'arn:<partition>:kms:<region>:[:path]'.
 // See http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html.
-func newAWSAEAD(keyURI string, kms *kms.KMS) *AWSAEAD {
+func newAWSAEAD(keyURI string, kms kmsiface.KMSAPI) *AWSAEAD {
 	return &AWSAEAD{
 		keyURI: keyURI,
 		kms:    kms,
